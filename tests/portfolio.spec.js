@@ -11,6 +11,7 @@ test("GenTool has a project page with synchronized, scrollable screenshot views"
   await card.locator(".project-card-link").click();
   await expect(page.locator("#project-views")).toHaveAttribute("aria-busy", "false");
   await expect(page.locator("#project-title")).toHaveText("GenTool Data Viewer");
+  await expect(page).toHaveTitle("GenTool Data Viewer");
   await expect(page.locator("#project-description")).toHaveText(description);
   await expect(page.locator(".technology-list li")).toHaveText(tags);
   await expect(page.locator("#project-live")).toHaveAttribute("href", "https://gentool-data-viewer.taonity.org/");
@@ -117,6 +118,7 @@ test("project index links to a separate project page with complete titles", asyn
   page,
 }) => {
   await page.goto("/");
+  await expect(page).toHaveTitle("Projects");
   await expect(
     page.getByRole("heading", { name: "Projects", exact: true }),
   ).toBeVisible();
@@ -147,6 +149,7 @@ test("project index links to a separate project page with complete titles", asyn
   await page.locator("#theme-toggle").click();
   await yarikCard.locator(".project-card-link").click();
   await expect(page).toHaveURL(new RegExp(projectPath + "$"));
+  await expect(page).toHaveTitle("Yarik LLM Bot");
   await expect(
     page.getByRole("heading", { name: "Yarik LLM Bot", level: 1 }),
   ).toBeVisible();
@@ -167,6 +170,7 @@ test("project index links to a separate project page with complete titles", asyn
     .getByRole("link", { name: "All projects", exact: true })
     .first()
     .click();
+  await expect(page).toHaveTitle("Projects");
   await expect(
     page.getByRole("heading", { name: "Projects", exact: true }),
   ).toBeVisible();
@@ -181,6 +185,7 @@ test("Fullstack Starter has its own screenshots and consistent project details",
   await expect(card.locator("img")).toHaveAttribute("src", /fullstack-starter\/.*\/phone\/admin\.png$/);
   await card.locator("a").click();
   await expect(page).toHaveURL(/\/projects\/fullstack-starter\/$/);
+  await expect(page).toHaveTitle("Fullstack Starter");
   await expect(page.locator("#project-views")).toHaveAttribute("aria-busy", "false");
   await expect(page.getByRole("heading", { name: "Fullstack Starter", level: 1 })).toBeVisible();
   await expect(page.locator("#project-description")).toHaveText(description);
